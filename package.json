@@ -1,0 +1,13 @@
+{
+  "name": "shopback-SEO-parser",
+  "version": "1.0.0",
+  "description": "A Nodejs code challenge.",
+  "main": "index.js",
+  "repository": "https://github.com/ssuio/shopback-SEO-parser.git",
+  "author": "Noah Chou <xssuio@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^5.4.0",
+    "mocha": "^5.2.0"
+  }
+}
