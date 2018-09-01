@@ -14,6 +14,11 @@
 > sudo apt-get install -y nodejs  
 
 ----------
+## Demo
+> npm install && npm start
+
+----------
+
 ## Usage
 
 ### File path
@@ -237,7 +242,7 @@ current active branch: **development**
 
 ## Run all test suite ##
   
-	mocha ./test/**/*.mocha.js
+	npm test
 
 ----------
 *Author: Noah*

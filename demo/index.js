@@ -15,7 +15,7 @@ function generateDemoTemplate() {
 }
 
 async function parser() {
-    const filePath = path.join(__dirname, './template4.html');
+    const filePath = path.join(__dirname, './template.html');
     const parser = new (require('../'))();
 
     // //Steam

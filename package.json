@@ -8,7 +8,7 @@
   "license": "MIT",
   "scripts": {
     "start": "node .\\demo",
-    "test": ".\\node_modules\\.bin\\mocha .\\test\\**\\*.mocha.js  --reporter list"
+    "test": ".\\node_modules\\.bin\\mocha .\\test\\**\\*.mocha.js --reporter list"
   },
   "devDependencies": {
     "chai": "^4.1.2",

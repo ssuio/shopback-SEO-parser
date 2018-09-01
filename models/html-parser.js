@@ -14,7 +14,6 @@ const Parser = require("htmlparser2").Parser;
  */
 
 function HTMLParser(control){
-    const self = this;
     Parser.call(this, control, { decodeEntities: true });
 }
 
