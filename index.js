@@ -3,15 +3,20 @@ let shopbackSEOParser = new ShopbackSEOParser();
 
 module.exports = shopbackSEOParser;
 if (module.id === '.') {
-    
-    // var fs = require("fs");
-    // fs.createReadStream('./test/template.html')
-    //     .pipe(parser);
     parser();
 }
 
-async function parser(){
+async function parser() {
     let parser = require('.');
+    const filePath = './demo/template.html';
+
+    // // //Steam
+    const fs = require('fs');
+    fs.createReadStream(filePath)
+        .pipe(parser)
+        .pipe(process.stdout);
+        
+    //File path
     await parser.parse('./demo/template.html');
-    console.log('done!');
+    console.log('done!!!!');
 }

@@ -5,10 +5,12 @@
 const util = require('util');
 const fs = require('fs');
 const Transform = require('stream').Transform;
-const EventEmitter = require('events').EventEmitter; 
+// const EventEmitter = require('events').EventEmitter; 
 const ConfigError = require('../error/config-error');
 const preDefinedRules = require('../rules/pre-defined-rules');
-let HTMLparser = require('./html-parser');
+const HTMLparser = require('./html-parser');
+const RulesHandler = require('./rules-handler');
+const out = require('./result-parser');
 
 /**
  * Constructor.
@@ -17,16 +19,14 @@ let HTMLparser = require('./html-parser');
 function ShopbackSEOParser() {
     this.rules = preDefinedRules;
 
-    EventEmitter.call(this);
-    Transform.call(this, {decodeStrings: false});
+    Transform.call(this, { decodeStrings: false });
 }
 
 /**
  * Inherit prototype.
  */
 
-util.inherits(ShopbackSEOParser ,EventEmitter);
-util.inherits(ShopbackSEOParser ,Transform);
+util.inherits(ShopbackSEOParser, Transform);
 
 
 ShopbackSEOParser.prototype.setRules = function (rules) {
@@ -40,13 +40,16 @@ ShopbackSEOParser.prototype.setRules = function (rules) {
 
 ShopbackSEOParser.prototype.parse = function (filePath) {
     const self = this;
+    if (!filePath) {
+        throw new ConfigError('Must config a filepath.');
+    }
     fs.createReadStream(filePath)
         .pipe(this);
     return new Promise((resolve, reject) => {
-        self.on('error', ()=>{
+        self.on('error', () => {
             reject();
         });
-        self.on('end', ()=>{
+        self.on('end', () => {
             resolve();
         });
     });
@@ -58,12 +61,23 @@ ShopbackSEOParser.prototype.parse = function (filePath) {
 
 ShopbackSEOParser.prototype._transform = function (chunk, _encoding, done) {
     const self = this;
+    const rulesHandler = new RulesHandler(self.rules);
+    const scope = [];
     let htmlParser = new HTMLparser({
-        onEnd: ()=>{
+        onopentag: function (name, attrs) {
+            scope.push(name);
+            rulesHandler.verify(scope, name, attrs);
+        },
+        onclosetag: function (name) {
+            scope.pop(name);
+        },
+        onend: function () {
             self.emit('end');
+            console.log('ending');
         }
     });
-    done(null, htmlParser.write(chunk.toString()));
+    htmlParser.write(chunk.toString());
+    done(null, 'temp str');
     htmlParser.end();
 };
 
