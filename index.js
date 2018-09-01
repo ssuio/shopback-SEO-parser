@@ -18,5 +18,4 @@ async function parser() {
         
     //File path
     await parser.parse('./demo/template.html');
-    console.log('done!!!!');
 }

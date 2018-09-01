@@ -7,7 +7,7 @@
   "author": "Noah Chou <xssuio@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "node .\\index",
+    "start": "node .\\demo",
     "test": ".\\node_modules\\.bin\\mocha .\\test\\**\\*.mocha.js  --reporter list"
   },
   "devDependencies": {

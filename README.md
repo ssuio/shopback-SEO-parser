@@ -18,7 +18,8 @@
 
 ### File path
 ```js
-        const parser = require('shopback-seo-parser');
+        const ShopbackSEOParser = require('shopback-seo-parser');
+        const parser = new ShopbackSEOParser();
 		parser('./template.html')
 		.then((result)=>{
 			//Get result.
@@ -28,10 +29,20 @@
 ### Stream
 ```js
         const fs = require('fs');
-        const parser = require('shopback-seo-parser');
+        const ShopbackSEOParser = require('shopback-seo-parser');
+        const parser = new ShopbackSEOParser();
 		fs.createReadStream('./template.html')
         .pipe(parser)
         .pipe(process.stdout);
+```
+
+### Async
+```js
+        const fs = require('fs');
+        const ShopbackSEOParser = require('shopback-seo-parser');
+        const parser = new ShopbackSEOParser();
+        let result = await parser('./template.html');
+        //result
 ```
 
 ### Defaults rules
@@ -153,8 +164,9 @@ configurable by user)
 
 - Set customize rules.
 ```js
-	const parser = require('shopback-seo-parser');
-	const customizeRule = [{
+    const ShopbackSEOParser = require('shopback-seo-parser');
+    const parser = new ShopbackSEOParser();
+    const customizeRule = [{
         "tag": {
             include: "img"
         },

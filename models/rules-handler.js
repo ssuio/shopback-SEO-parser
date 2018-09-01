@@ -31,7 +31,6 @@ RulesHandler.prototype.verify = function (scope, tag, attrs) {
         if (key == 'rules') {
             verifyRules(refinedRules[key], tag, attrs);
         } else if (scope.includes(key)) {
-            // console.log(`${scope.join('>')}`);
             verifyRules(refinedRules[key].rules, tag, attrs);
         }
     }
@@ -39,11 +38,8 @@ RulesHandler.prototype.verify = function (scope, tag, attrs) {
 
 function verifyRules(rules, tag, attrs) {
     rules.forEach(rule => {
-        // console.log(`DOM: ${tag} ${JSON.stringify(attrs)}`);
-        // console.log(JSON.stringify(rule));
         let verifyResult = verifyTag(rule, tag, attrs);
         verifyResult ? rule.count++ : '';
-        // console.log(`verify result:${verifyResult}`);
     });
 }
 
@@ -100,5 +96,4 @@ if (module.id === '.') {
     let rules = require('../rules/pre-defined-rules');
     let refinedRules = refine(rules);
     verifyRules(refinedRules['rules'], 'meta', { name: 'description' });
-    console.log('end');
 }

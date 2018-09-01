@@ -50,8 +50,8 @@ ShopbackSEOParser.prototype.parse = function (filePath) {
         self.on('error', () => {
             reject();
         });
-        self.on('end', () => {
-            resolve();
+        self.on('end', (result) => {
+            resolve(result);
         });
     });
 };
@@ -73,11 +73,10 @@ ShopbackSEOParser.prototype._transform = function (chunk, _encoding, done) {
             scope.pop(name);
         },
         onend: function () {
-            self.emit('end');
+            self.emit('end', out.parseResult(rulesHandler.rules));
         }
     });
     htmlParser.write(chunk.toString());
-    console.log(rulesHandler.rules);
     done(null, out.parseResult(rulesHandler.rules));
     htmlParser.end();
 };
