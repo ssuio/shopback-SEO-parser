@@ -1,23 +1,4 @@
-const RuleError = require('../error/rule-error');
 const _ = require('lodash');
-
-const format = {
-    head: {
-
-    },
-    rules: [{
-        include: {
-            tag: 'meta'
-        },
-        exclude: {
-            attr: {
-                name: undefined
-            }
-        },
-        count: 0
-    }
-    ]
-}
 
 function RulesHandler(rules) {
     this.rules = refine(rules);
@@ -68,7 +49,7 @@ function verifyRules(rules, tag, attrs) {
 
 function verifyTag(rule, tag, attrs) {
     let ruleTag = rule.tag.include || rule.tag.exclude;
-    if (ruleTag == tag) {
+    if (ruleTag.toLowerCase() == tag.toLowerCase()) {
         return verifyAttr(rule.attrs, attrs);
     } else {
         return false;
@@ -90,7 +71,7 @@ function verifyAttr(ruleAttrs, attrs) {
     keys.forEach(key => {
         if (includeAttrs) {
             //Check attr without value.
-            if (includeAttrs.hasOwnProperty(key) && includeAttrs[key] === undefined) {
+            if (includeAttrs.hasOwnProperty(key) && (includeAttrs[key] === undefined) || (includeAttrs[key] === 'undefined')) {
                 matchInclude = true;
             }
             //Check attr without value.
@@ -98,9 +79,9 @@ function verifyAttr(ruleAttrs, attrs) {
                 matchInclude = true;
             }
         }
-        if (excludeAttrs){
+        if (excludeAttrs) {
             //Check attr without value.
-            if (excludeAttrs.hasOwnProperty(key) && excludeAttrs[key] === undefined) {
+            if (excludeAttrs.hasOwnProperty(key) && (excludeAttrs[key] === undefined) || (excludeAttrs[key] === 'undefined')) {
                 matchExclude = true;
             }
             //Check attr without value.
@@ -111,25 +92,6 @@ function verifyAttr(ruleAttrs, attrs) {
     });
 
     return matchInclude && matchExclude;
-}
-
-function compareInText(count, comparators, specNum) {
-    var arr = comparators.split('');
-    if (arr.length > 2) throw new RuleError('Comparators more than 2.');
-    var ret = false;
-    for (var idx in arr) {
-        switch (arr[idx]) {
-            case '>':
-                ret = (ret || (count > specNum));
-                break;
-            case '=':
-                ret = (ret || (count == specNum));
-                break;
-            case '<':
-                ret = (ret || (count < specNum));
-        }
-    }
-    return ret;
 }
 
 module.exports = RulesHandler;

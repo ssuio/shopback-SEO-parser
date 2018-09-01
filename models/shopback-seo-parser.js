@@ -29,9 +29,10 @@ function ShopbackSEOParser() {
 util.inherits(ShopbackSEOParser, Transform);
 
 
-ShopbackSEOParser.prototype.setRules = function (rules) {
-    if (rules && Array.isArray(rules)) {
-        this.rules.concat(rules);
+ShopbackSEOParser.prototype.setup = function (options) {
+    options = options || {};
+    if (options.rules && Array.isArray(options.rules)) {
+        this.rules.concat(options.rules);
     } else {
         throw new ConfigError('Rules must be an array.');
     }
@@ -73,11 +74,10 @@ ShopbackSEOParser.prototype._transform = function (chunk, _encoding, done) {
         },
         onend: function () {
             self.emit('end');
-            console.log('ending');
         }
     });
     htmlParser.write(chunk.toString());
-    done(null, 'temp str');
+    done(null, out.parseResult(rulesHandler.rules));
     htmlParser.end();
 };
 
