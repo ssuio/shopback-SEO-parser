@@ -204,6 +204,8 @@ current active branch: **development**
 
 &nbsp;&nbsp;├**rules**
 
+&nbsp;&nbsp;├**error**
+
 &nbsp;&nbsp;├**demo**
 
 &nbsp;&nbsp;├**test**
