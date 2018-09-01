@@ -6,7 +6,19 @@
     "extends": "eslint:recommended",
     "rules": {
         "no-undef": "error",
-        "semi": ["error", "always"],
-        "indent": ["error", 4, { "SwitchCase": 1 }]
+        "semi": [
+            "error",
+            "always"
+        ],
+        "indent": [
+            "error",
+            4,
+            {
+                "SwitchCase": 1
+            }
+        ]
+    },
+    "parserOptions": {
+        "ecmaVersion": 2017
     }
 }

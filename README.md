@@ -25,7 +25,7 @@ current active branch: **development**
 ----------
 ## Project Structure
 
-&nbsp;&nbsp;├**model**
+&nbsp;&nbsp;├**models**
 
 &nbsp;&nbsp;├**rules**
 

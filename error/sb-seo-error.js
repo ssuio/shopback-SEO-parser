@@ -14,3 +14,5 @@ function ShopbackSEOError(message){
 
 util.inherits(ShopbackSEOError, Error);
 
+module.exports = ShopbackSEOError;
+

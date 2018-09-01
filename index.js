@@ -1,22 +1,17 @@
-const RuleError = require('./error/rule-error');
+const ShopbackSEOParser = require('./models/shopback-seo-parser');
+let shopbackSEOParser = new ShopbackSEOParser();
 
-function ShopbackSEOParser(rules, source){
-    this.rules = rules;
-    this.source = source;
+module.exports = shopbackSEOParser;
+if (module.id === '.') {
+    
+    // var fs = require("fs");
+    // fs.createReadStream('./test/template.html')
+    //     .pipe(parser);
+    parser();
 }
 
-ShopbackSEOParser.prototype.setRules = function(rules){
-    this.rules = rules;
-};
-
-ShopbackSEOParser.prototype.parse = function(){
-    if(!this.rules){
-        throw new RuleError();
-    }
-
-    return new Promise((resolve, reject)=>{
-        reject();
-    });
-};
-
-module.exports = ShopbackSEOParser;
+async function parser(){
+    let parser = require('.');
+    await parser.parse('./demo/template.html');
+    console.log('done!');
+}

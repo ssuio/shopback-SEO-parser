@@ -5,7 +5,7 @@ const ShopbackSEOError = require('./sb-seo-error');
  * Constructor.
  */
 
-function RuleError(message){
+function ConfigError(message){
     ShopbackSEOError.call(this, message);
 }
 
@@ -13,6 +13,6 @@ function RuleError(message){
  * Inherit prototype.
  */
 
-util.inherits(RuleError, ShopbackSEOError);
+util.inherits(ConfigError, ShopbackSEOError);
 
-module.exports = RuleError;
+module.exports = ConfigError;
