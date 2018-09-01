@@ -219,13 +219,50 @@ current active branch: **development**
 
 &nbsp;&nbsp;├**models**
 
+&nbsp;&nbsp;│&nbsp;&nbsp;├**html-parser.js**
+
+&nbsp;&nbsp;│&nbsp;&nbsp;├**result-parser.js**
+
+&nbsp;&nbsp;│&nbsp;&nbsp;├**rules-handler.js**
+
+&nbsp;&nbsp;│&nbsp;&nbsp;├**shopback-seo-parser.js**
+
 &nbsp;&nbsp;├**rules**
 
+&nbsp;&nbsp;│&nbsp;&nbsp;├**customize-rules.js**
+
+&nbsp;&nbsp;│&nbsp;&nbsp;├**pre-defined-rules.js**
+
+
 &nbsp;&nbsp;├**error**
+
+&nbsp;&nbsp;│&nbsp;&nbsp;├**sb-seo-errors.js**
+
+&nbsp;&nbsp;│&nbsp;&nbsp;├**config-errors.js**
+
+&nbsp;&nbsp;│&nbsp;&nbsp;├**rule-errors.js**
+
+&nbsp;&nbsp;│&nbsp;&nbsp;├**parse-errors.js**
 
 &nbsp;&nbsp;├**demo**
 
 &nbsp;&nbsp;├**test**
+
+&nbsp;&nbsp;│&nbsp;&nbsp;├**result-parser.mocha.js**
+
+&nbsp;&nbsp;│&nbsp;&nbsp;├**shopback-seo-parser.mocha.js**
+
+&nbsp;&nbsp;│&nbsp;&nbsp;├**templates.js**
+
+&nbsp;&nbsp;├**index.js**
+
+&nbsp;&nbsp;├**package.json**
+
+&nbsp;&nbsp;├**README.md**
+
+&nbsp;&nbsp;├**eslintrc.json**
+
+&nbsp;&nbsp;├**LICENSE**
 
 ----------
 # UnitTest
