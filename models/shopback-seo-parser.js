@@ -2,10 +2,13 @@
  * @author Noah Chou <xssuio@gmail.com>
  */
 
+/**
+* Module dependencies.
+*/
+
 const util = require('util');
 const fs = require('fs');
 const Transform = require('stream').Transform;
-// const EventEmitter = require('events').EventEmitter; 
 const ConfigError = require('../error/config-error');
 const preDefinedRules = require('../rules/pre-defined-rules');
 const HTMLparser = require('./html-parser');
@@ -16,9 +19,27 @@ const out = require('./result-parser');
  * Constructor.
  */
 
-function ShopbackSEOParser() {
-    this.rules = preDefinedRules;
-
+function ShopbackSEOParser(options) {
+    const self = this;
+    options = options || {};
+    if (options.defaultRules) {
+        var defaultRulesNums = options.defaultRules;
+        if (!Array.isArray(defaultRulesNums)) {
+            throw new ConfigError('Setup default rules must give a number array.');
+        } else {
+            self.rules = [];
+            defaultRulesNums.forEach(num => {
+                self.rules.push(preDefinedRules[num - 1]);
+            });
+        }
+    } else if (options.rules && Array.isArray(options.rules)) {
+        self.rules = options.rules;
+    } else {
+        self.rules = preDefinedRules;
+    }
+    if (!Array.isArray(this.rules)) {
+        throw new ConfigError('Rules must be an array.');
+    }
     Transform.call(this, { decodeStrings: false });
 }
 
@@ -28,16 +49,9 @@ function ShopbackSEOParser() {
 
 util.inherits(ShopbackSEOParser, Transform);
 
-
-ShopbackSEOParser.prototype.setup = function (options) {
-    options = options || {};
-    if (options.rules && Array.isArray(options.rules)) {
-        this.rules.concat(options.rules);
-    } else {
-        throw new ConfigError('Rules must be an array.');
-    }
-    return this;
-};
+/**
+ * General parse func by file path.
+ */
 
 ShopbackSEOParser.prototype.parse = function (filePath) {
     const self = this;
@@ -57,7 +71,7 @@ ShopbackSEOParser.prototype.parse = function (filePath) {
 };
 
 /**
- * Parser be pipable.
+ * Make this parser pipable.
  */
 
 ShopbackSEOParser.prototype._transform = function (chunk, _encoding, done) {

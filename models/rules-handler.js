@@ -1,15 +1,27 @@
+/**
+ * @author Noah Chou <xssuio@gmail.com>
+ */
+
+/**
+ * Module dependency.
+ */
+
 const _ = require('lodash');
+
+/**
+ * Constructor.
+ */
 
 function RulesHandler(rules) {
     this.rules = refine(rules);
 }
 
+/**
+ * Unify rules in it's scope.
+ */
+
 function refine(rules) {
     const refinedRules = { rules: [] };
-
-    /**
-     * Search scope.
-    */
 
     rules.forEach(rule => {
         let scope = rule.scope;
@@ -24,6 +36,10 @@ function refine(rules) {
     return refinedRules;
 }
 
+/**
+ * Verify by per rule in it's scope.
+ */
+
 RulesHandler.prototype.verify = function (scope, tag, attrs) {
     const self = this;
     const refinedRules = self.rules;
@@ -36,12 +52,20 @@ RulesHandler.prototype.verify = function (scope, tag, attrs) {
     }
 };
 
+/**
+ * Verify by per rule with tag/attrs.
+ */
+
 function verifyRules(rules, tag, attrs) {
     rules.forEach(rule => {
         let verifyResult = verifyTag(rule, tag, attrs);
         verifyResult ? rule.count++ : '';
     });
 }
+
+/**
+ * Verify by per rule with tag.
+ */
 
 function verifyTag(rule, tag, attrs) {
     let ruleTag = rule.tag.include || rule.tag.exclude;
@@ -52,48 +76,46 @@ function verifyTag(rule, tag, attrs) {
     }
 }
 
+/**
+ * Verify by per rule with attrs.
+ */
+
 function verifyAttr(ruleAttrs, attrs) {
 
     if (!ruleAttrs) {
         return true;
     }
 
-    let includeAttrs = _.isEmpty(ruleAttrs.include) ? ruleAttrs.include : undefined;
-    let matchInclude = !includeAttrs; //Because undefined means no rules
-    let excludeAttrs = _.isEmpty(ruleAttrs.exclude) ? ruleAttrs.exclude : undefined;
-    let matchExclude = true;
+    let withAttrs = !_.isEmpty(ruleAttrs.with) ? ruleAttrs.with : undefined;
+    let matchWith = withAttrs === '' ? true : !withAttrs; //Because undefined means no rules
+    let withoutAttrs = !_.isEmpty(ruleAttrs.without) ? ruleAttrs.without : undefined;
+    let matchWithout = true;
 
     let keys = _.keys(attrs);
     keys.forEach(key => {
-        if (includeAttrs) {
+        if (withAttrs) {
             //Check attr without value.
-            if (includeAttrs.hasOwnProperty(key) && (includeAttrs[key] === undefined) || (includeAttrs[key] === 'undefined')) {
-                matchInclude = true;
+            if (withAttrs.hasOwnProperty(key) && withAttrs[key] === '') {
+                matchWith = true;
             }
             //Check attr without value.
-            else if (includeAttrs.hasOwnProperty(key) && includeAttrs[key] === attrs[key]) {
-                matchInclude = true;
+            else if (withAttrs.hasOwnProperty(key) && withAttrs[key] === attrs[key]) {
+                matchWith = true;
             }
         }
-        if (excludeAttrs) {
+        if (withoutAttrs) {
             //Check attr without value.
-            if (excludeAttrs.hasOwnProperty(key) && (excludeAttrs[key] === undefined) || (excludeAttrs[key] === 'undefined')) {
-                matchExclude = true;
+            if (withoutAttrs.hasOwnProperty(key) && withoutAttrs[key] === '') {
+                matchWithout = false;
             }
             //Check attr without value.
-            else if (excludeAttrs.hasOwnProperty(key) && excludeAttrs[key] === attrs[key]) {
-                matchExclude = true;
+            else if (withoutAttrs.hasOwnProperty(key) && withoutAttrs[key] === attrs[key]) {
+                matchWithout = false;
             }
         }
     });
 
-    return matchInclude && matchExclude;
+    return matchWith && matchWithout;
 }
 
 module.exports = RulesHandler;
-
-if (module.id === '.') {
-    let rules = require('../rules/pre-defined-rules');
-    let refinedRules = refine(rules);
-    verifyRules(refinedRules['rules'], 'meta', { name: 'description' });
-}

@@ -1,3 +1,11 @@
+/**
+ * @author Noah Chou <xssuio@gmail.com>
+ */
+
+/**
+ * Module dependency.
+ */
+
 const util = require('util');
 const ShopbackSEOError = require('./sb-seo-error');
 

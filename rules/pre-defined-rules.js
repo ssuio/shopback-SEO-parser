@@ -2,6 +2,10 @@
  * @author Noah Chou <xssuio@gmail.com>
  */
 
+/**
+* Pre-defined rules.
+*/
+
 const rules = [
     /**
      * 1. Detect if any <img /> tag without alt attribute
@@ -12,8 +16,8 @@ const rules = [
             include: 'img',
         },
         attrs: {
-            exclude: {
-                alt: undefined
+            with: {
+                alt: ''
             }
         }
     },
@@ -27,12 +31,12 @@ const rules = [
             include: 'a',
         },
         attrs: {
-            exclude: {
-                rel: undefined
+            without: {
+                rel: ''
             }
         }
-    }, 
-    
+    },
+
     /**
      * 3. In <head> tag
      *    i. Detect if header doesn’t have <title> tag
@@ -45,34 +49,34 @@ const rules = [
         tag: {
             include: 'title',
         }
-    }, 
+    },
     {
         scope: 'head',
         tag: {
-            exclude: 'img',
+            exclude: 'meta',
         },
         attrs: {
-            include: {
-                name: 'description'
+            with: {
+                name: 'descriptions'
             }
         }
     }, {
         scope: 'head',
         tag: {
-            exclude: 'img',
+            exclude: 'meta',
         },
         attrs: {
-            include: {
+            without: {
                 name: 'keywords'
             }
         }
-    }, 
-    
+    },
+
     /**
      * 4. Detect if there’re more than 15 <strong> tag in HTML (15 is a value should be
 configurable by user)
     */
-    
+
     {
         tag: {
             include: 'strong',
@@ -80,12 +84,12 @@ configurable by user)
         condition: {
             '>': 15
         }
-    }, 
-    
+    },
+
     /**
      * 5. Detect if a HTML have more than one <H1> tag.
     */
-    
+
     {
         tag: {
             include: 'H1',

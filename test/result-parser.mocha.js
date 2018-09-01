@@ -58,11 +58,12 @@ describe('models/result-parser - parse rulesResultArr', function () {
     it('Use mockRuleResults', function () {
         resultParser = require('../models/result-parser');
         assert.equal(
-            'There are 1 <img> tag without alt attribute.\n' +
-            'There are 0 <a> tag without rel attribute someStr value.\n' +
-            'This HTML without <title> tag in head tag.\n' +
-            'This HTML have more than 3 <strong> tag.\n' +
-            'This HTML have less than 3 <p> tag.',
-            resultParser.parseResult({ rules: mockResults }));
+            [
+                'There are 1 <img> tag.',
+                'There are 0 <a> tag.',
+                'This HTML doesn\'t have <title> tag in head tag.',
+                'This HTML have more than 3 <strong> tag.',
+                'This HTML have less than 3 <p> tag.'
+            ].join('\n'), resultParser.parseResult({ rules: mockResults }));
     });
 });

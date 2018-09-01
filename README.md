@@ -58,7 +58,7 @@
             include: 'img',
         },
         attrs: {
-            exclude: {
+            without: {
                 alt: undefined
             }
         }
@@ -73,7 +73,7 @@
             include: 'a',
         },
         attrs: {
-            exclude: {
+            without: {
                 rel: undefined
             }
         }
@@ -98,7 +98,7 @@
             exclude: 'img',
         },
         attrs: {
-            include: {
+            with: {
                 name: 'description'
             }
         }
@@ -108,7 +108,7 @@
             exclude: 'img',
         },
         attrs: {
-            include: {
+            with: {
                 name: 'keywords'
             }
         }
@@ -144,6 +144,19 @@ configurable by user)
 
 ```
 
+### Speciffy default rules
+- Specify default rules by number array.
+```js
+        const ShopbackSEOParser = require('shopback-seo-parser');
+        const parser = new ShopbackSEOParser({
+            defaultRules:[1,3,5]
+        });
+		parser('./template.html')
+		.then((result)=>{
+			//Get result.
+		});
+```
+
 ### Customize rules
 - Rule format : This mean find the tag img without alt attribute more than 10 tags.
 ```json
@@ -152,7 +165,7 @@ configurable by user)
             "include": "img"
         },
         "attrs": {
-            "exclude": {
+            "without": {
                 "alt": "undefined"
             }
         },
@@ -165,13 +178,15 @@ configurable by user)
 - Set customize rules.
 ```js
     const ShopbackSEOParser = require('shopback-seo-parser');
-    const parser = new ShopbackSEOParser();
+    const parser = new ShopbackSEOParser({
+        rules: customizeRules
+    });
     const customizeRule = [{
         "tag": {
             include: "img"
         },
         attrs: {
-            exclude: {
+            without: {
                 "alt": undefined
             }
         },
@@ -179,9 +194,6 @@ configurable by user)
             ">": 10        
         }
     }];
-    parser.setup({
-        rules: customizeRules
-    })
     .parser('./template.html')
     .then((result)=>{
             //Get result.

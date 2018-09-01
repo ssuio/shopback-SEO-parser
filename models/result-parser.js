@@ -1,5 +1,17 @@
+/**
+ * @author Noah Chou <xssuio@gmail.com>
+ */
+
+/**
+ * Module dependency.
+ */
+
 const ParseResultError = require('../error/parse-result-error');
 const _ = require('lodash');
+
+/**
+ * Result entry.
+ */
 
 function translateResult(resultObj) {
     let resArr = [];
@@ -22,6 +34,10 @@ function translateResult(resultObj) {
     return resArr.join('.\n') + '.';
 }
 
+/**
+ * Handle tag part.
+ */
+
 function translateTag(rule) {
     if (rule.condition) {
         let comparator = _.keys(rule.condition)[0];
@@ -32,32 +48,36 @@ function translateTag(rule) {
         let count = rule.count;
         return `There are ${count} <${rule.tag.include}> tag `;
     } else if (rule.tag.exclude) {
-        let count = rule.tag.count;
+        let count = rule.count;
         if (count > 0) {
-            return `There are ${count} <${rule.tag.exclude}> tag `;
+            return `This HTML does have ${count} <${rule.tag.exclude}> tag `;
         } else {
-            return `This HTML without <${rule.tag.exclude}> tag `;
+            return `This HTML doesn't have <${rule.tag.exclude}> tag `;
         }
     } else {
         throw new ParseResultError('Result has no tag.');
     }
 }
 
+/**
+ * Handle attrs part.
+ */
+
 function translateAttrs(rule) {
-    let includeAttrsStr = 'with ';
-    let excludeAttrsStr = 'without ';
+    let withAttrsStr = 'with ';
+    let withoutAttrsStr = 'without ';
     let retStr = '';
 
-    if (rule.attrs && rule.attrs.include && !_.isEmpty(rule.attrs.include)) {
-        retStr += includeAttrsStr;
-        for (let key in rule.attrs.include) {
-            retStr += perAttrStr(key, rule.attrs.include[key]);
+    if (rule.attrs && rule.attrs.with && !_.isEmpty(rule.attrs.with)) {
+        retStr += withAttrsStr;
+        for (let key in rule.attrs.with) {
+            retStr += perAttrStr(key, rule.attrs.with[key]);
         }
     }
-    if (rule.attrs && rule.attrs.exclude && !_.isEmpty(rule.attrs.exclude)) {
-        retStr += excludeAttrsStr;
-        for (let key in rule.attrs.exclude) {
-            retStr += perAttrStr(key, rule.attrs.exclude[key]);
+    if (rule.attrs && rule.attrs.without && !_.isEmpty(rule.attrs.without)) {
+        retStr += withoutAttrsStr;
+        for (let key in rule.attrs.without) {
+            retStr += perAttrStr(key, rule.attrs.without[key]);
         }
     }
     return retStr;
@@ -66,12 +86,20 @@ function translateAttrs(rule) {
     }
 }
 
+/**
+ * Handle outter tag translation.
+ */
+
 function translateScope(rule) {
     if (rule.scope) {
         return `in ${rule.scope} tag`;
     }
     return '';
 }
+
+/**
+ * Handle comparator translation.
+ */
 
 function translateComparatorText(count, comparators, specNum) {
     var arr = comparators.split('');
