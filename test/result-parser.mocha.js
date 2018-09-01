@@ -63,6 +63,6 @@ describe('models/result-parser - parse rulesResultArr', function () {
             'This HTML without <title> tag in head tag.\n' +
             'This HTML have more than 3 <strong> tag.\n' +
             'This HTML have less than 3 <p> tag.',
-            resultParser.parseResult(mockResults));
+            resultParser.parseResult({ rules: mockResults }));
     });
 });

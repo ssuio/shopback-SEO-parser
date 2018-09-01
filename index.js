@@ -1,7 +1,7 @@
 const ShopbackSEOParser = require('./models/shopback-seo-parser');
-let shopbackSEOParser = new ShopbackSEOParser();
+// let shopbackSEOParser = new ShopbackSEOParser();
 
-module.exports = shopbackSEOParser;
+module.exports = ShopbackSEOParser;
 if (module.id === '.') {
     parser();
 }

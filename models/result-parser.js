@@ -1,15 +1,24 @@
 const ParseResultError = require('../error/parse-result-error');
 const _ = require('lodash');
 
-function translateResult(resultArr) {
+function translateResult(resultObj) {
     let resArr = [];
-    resultArr.forEach(rule => {
-        let str = '';
-        str += translateTag(rule);
-        str += translateAttrs(rule);
-        str += translateScope(rule);
-        resArr.push(str.trim());
-    });
+    for (let key in resultObj) {
+        let resultArr;
+        if (key == 'rules') {
+            resultArr = resultObj[key];
+        } else {
+            resultArr = resultObj[key].rules;
+        }
+        resultArr.forEach(rule => {
+            let str = '';
+            str += translateTag(rule);
+            str += translateAttrs(rule);
+            str += translateScope(rule);
+            resArr.push(str.trim());
+        });
+    }
+
     return resArr.join('.\n') + '.';
 }
 

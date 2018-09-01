@@ -167,13 +167,13 @@ configurable by user)
             ">": 10        
         }
     }];
-	parser.setup({
-		rules: customizeRules
-	})
-	.parser('./template.html')
-	.then((result)=>{
-		//Get result.
-	});
+    parser.setup({
+        rules: customizeRules
+    })
+    .parser('./template.html')
+    .then((result)=>{
+            //Get result.
+    });
 ```
 
 ----------

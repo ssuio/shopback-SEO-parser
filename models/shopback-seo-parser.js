@@ -77,6 +77,7 @@ ShopbackSEOParser.prototype._transform = function (chunk, _encoding, done) {
         }
     });
     htmlParser.write(chunk.toString());
+    console.log(rulesHandler.rules);
     done(null, out.parseResult(rulesHandler.rules));
     htmlParser.end();
 };
