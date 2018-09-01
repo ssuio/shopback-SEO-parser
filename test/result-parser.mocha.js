@@ -44,19 +44,11 @@ const mockResults = [
         }
     }, {
         tag: {
-            include: 'strong',
+            include: 'p',
         },
         count: 1,
         condition: {
             '<': 3
-        }
-    }, {
-        tag: {
-            exclude: 'title',
-        },
-        count: 3,
-        condition: {
-            '=': 3
         }
     }
 ];
@@ -69,9 +61,8 @@ describe('models/result-parser - parse rulesResultArr', function () {
             'There are 1 <img> tag without alt attribute.\n' +
             'There are 0 <a> tag without rel attribute someStr value.\n' +
             'This HTML without <title> tag in head tag.\n' +
-            'There is more than 3 <strong> tag in HTML.\n' +
-            'There is less than 3 <p> tag in HTML.\n' +
-            'There are 3 <strong> tag in HTML.\n',
+            'This HTML have more than 3 <strong> tag.\n' +
+            'This HTML have less than 3 <p> tag.',
             resultParser.parseResult(mockResults));
     });
 });

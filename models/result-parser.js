@@ -14,7 +14,12 @@ function translateResult(resultArr) {
 }
 
 function translateTag(rule) {
-    if (rule.tag.include) {
+    if (rule.condition) {
+        let comparator = _.keys(rule.condition)[0];
+        let comparatorTest = translateComparatorText(rule.count, comparator, rule.condition[comparator]);
+        let tagStr = `<${rule.tag.include ? rule.tag.include : rule.tag.exclude}> tag `;
+        return comparatorTest + tagStr;
+    } else if (rule.tag.include) {
         let count = rule.count;
         return `There are ${count} <${rule.tag.include}> tag `;
     } else if (rule.tag.exclude) {
@@ -52,11 +57,37 @@ function translateAttrs(rule) {
     }
 }
 
-function translateScope(rule){
-    if(rule.scope){
+function translateScope(rule) {
+    if (rule.scope) {
         return `in ${rule.scope} tag`;
     }
     return '';
+}
+
+function translateComparatorText(count, comparators, specNum) {
+    var arr = comparators.split('');
+    var ret = false;
+    for (var idx in arr) {
+        switch (arr[idx]) {
+            case '>':
+                ret = (ret || (count > specNum));
+                if (ret) {
+                    return `This HTML have more than ${specNum} `;
+                } else {
+                    return `This HTML dosen't have more than ${specNum} `;
+                }
+            case '<':
+                ret = (ret || (count < specNum));
+                if (ret) {
+                    return `This HTML have less than ${specNum} `;
+                } else {
+                    return `This HTML dosen't have less than ${specNum} `;
+                }
+            default:
+                throw new ParseResultError('Invalid comparator.');
+        }
+    }
+    return ret;
 }
 
 module.exports = {
