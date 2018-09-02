@@ -18,14 +18,14 @@ async function parser() {
     const filePath = path.join(__dirname, './template.html');
     const parser = new (require('../'))();
 
-    // //Steam
+    // Stream
     // const fs = require('fs');
     // fs.createReadStream(filePath)
     //     .pipe(parser)
     //     .pipe(process.stdout);
-
+    
     //File path
-    let result = await parser.parse(filePath);
-    console.log(result);
-    console.log('finished');
+    // let result = await parser.parse(filePath);
+    // console.log(result);
+    // console.log('finished');
 }

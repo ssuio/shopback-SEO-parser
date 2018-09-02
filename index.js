@@ -1,5 +1,4 @@
 const ShopbackSEOParser = require('./models/shopback-seo-parser');
-// let shopbackSEOParser = new ShopbackSEOParser();
 
 module.exports = ShopbackSEOParser;
 if (module.id === '.') {
@@ -7,10 +6,10 @@ if (module.id === '.') {
 }
 
 async function parser() {
-    let parser = require('.');
+    let parser = new (require('.'))();
     const filePath = './demo/template.html';
 
-    // // //Steam
+    // Stream
     const fs = require('fs');
     fs.createReadStream(filePath)
         .pipe(parser)
