@@ -70,7 +70,7 @@ function verifyRules(rules, tag, attrs) {
 function verifyTag(rule, tag, attrs) {
     let ruleTag = rule.tag.include || rule.tag.exclude;
     if (ruleTag.toLowerCase() == tag.toLowerCase()) {
-        return verifyAttr(rule.attrs, attrs);
+        return verifyAttrs(rule.attrs, attrs);
     } else {
         return false;
     }
@@ -80,7 +80,7 @@ function verifyTag(rule, tag, attrs) {
  * Verify by per rule with attrs.
  */
 
-function verifyAttr(ruleAttrs, attrs) {
+function verifyAttrs(ruleAttrs, attrs) {
 
     if (!ruleAttrs) {
         return true;

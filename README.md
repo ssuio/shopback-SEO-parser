@@ -156,7 +156,7 @@ configurable by user)
 
 ```
 
-### Speciffy default rules
+### Specify default rules
 - Specify default rules by number array.
 ```js
         const ShopbackSEOParser = require('shopback-seo-parser');
