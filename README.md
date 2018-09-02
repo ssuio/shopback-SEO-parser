@@ -21,14 +21,19 @@
 
 ## Usage
 
+```sh
+npm install shopback-seo-parser --save
+```
+
 ### File path
 ```js
         const ShopbackSEOParser = require('shopback-seo-parser');
         const parser = new ShopbackSEOParser();
-		parser('./template.html')
-		.then((result)=>{
-			//Get result.
-		});
+
+        parser.parse('./template.html')
+            .then((result)=>{
+                //Get result.
+            });
 ```
 
 ### Stream
@@ -36,17 +41,18 @@
         const fs = require('fs');
         const ShopbackSEOParser = require('shopback-seo-parser');
         const parser = new ShopbackSEOParser();
-		fs.createReadStream('./template.html')
-        .pipe(parser)
-        .pipe(process.stdout);
+
+        fs.createReadStream('./template.html')
+            .pipe(parser)
+            .pipe(process.stdout); 
+            //result
 ```
 
 ### Async
 ```js
-        const fs = require('fs');
         const ShopbackSEOParser = require('shopback-seo-parser');
         const parser = new ShopbackSEOParser();
-        let result = await parser('./template.html');
+        let result = await parser.parse('./template.html');
         //result
 ```
 
@@ -156,10 +162,10 @@ configurable by user)
         const parser = new ShopbackSEOParser({
             defaultRules:[1,3,5]
         });
-		parser('./template.html')
-		.then((result)=>{
-			//Get result.
-		});
+        parser('./template.html')
+            .then((result)=>{
+                //Get result.
+            });
 ```
 
 ### Customize rules
@@ -182,27 +188,30 @@ configurable by user)
 
 - Set customize rules.
 ```js
+    const customizeRules = [
+        {
+            "tag": {
+                include: "img"
+            },
+            attrs: {
+                without: {
+                    "alt": undefined
+                }
+            },
+            condition: {
+                ">": 10        
+            }
+        }
+    ];
+
     const ShopbackSEOParser = require('shopback-seo-parser');
     const parser = new ShopbackSEOParser({
         rules: customizeRules
-    });
-    const customizeRule = [{
-        "tag": {
-            include: "img"
-        },
-        attrs: {
-            without: {
-                "alt": undefined
-            }
-        },
-        condition: {
-            ">": 10        
-        }
-    }];
-    .parser('./template.html')
-    .then((result)=>{
-            //Get result.
-    });
+    })
+    parser.parse('./template.html')
+        .then((result)=>{
+                //Get result.
+        });
 ```
 
 ----------
