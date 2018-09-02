@@ -1,6 +1,6 @@
 {
   "name": "shopback-seo-parser",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A Nodejs code challenge.",
   "main": "index.js",
   "repository": "https://github.com/ssuio/shopback-SEO-parser.git",

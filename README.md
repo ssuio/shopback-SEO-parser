@@ -59,7 +59,8 @@ npm install shopback-seo-parser --save
 ### Defaults rules
 ./rules/pre-defined-rules.js
 ```js
-	const rules = [
+const rules = [
+
     /**
      * 1. Detect if any <img /> tag without alt attribute
     */
